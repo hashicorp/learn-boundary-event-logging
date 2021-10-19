@@ -1,0 +1,65 @@
+version: "3.8"
+
+networks:
+  default:
+  worker:
+
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=boundary
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 10s
+      retries: 5
+
+  db-init:
+    image: hashicorp/boundary:0.6.2
+    command: ["database", "init", "-config", "/boundary/controller.hcl"]
+    volumes:
+      - "${PWD}/:/boundary/"
+    environment:
+      - BOUNDARY_PG_URL=postgresql://postgres:postgres@db/boundary?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+
+  controller:
+    image: hashicorp/boundary:0.6.2
+    # command: ["server", "-config", "/boundary/controller.hcl"]
+    entrypoint: sh -c "sleep 3 && exec boundary server -config /boundary/controller.hcl"
+    volumes:
+      - "${PWD}/:/boundary/"
+    hostname: boundary
+    ports:
+      - "9200:9200"
+      - "9201:9201"
+    environment:
+      - BOUNDARY_PG_URL=postgresql://postgres:postgres@db/boundary?sslmode=disable
+    depends_on:
+      - db-init
+    networks:
+      - default
+      - worker
+
+  worker:
+    image: hashicorp/boundary:0.6.2
+    command: ["server", "-config", "/boundary/worker.hcl"]
+    volumes:
+      - "${PWD}/:/boundary/"
+    hostname: worker
+    ports:
+      - "9202:9202"
+    environment:
+      - HOSTNAME=worker
+    depends_on:
+      - controller
+    networks:
+      - default
+      - worker
