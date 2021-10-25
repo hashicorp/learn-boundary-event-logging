@@ -60,16 +60,6 @@ events {
     event_types = ["*"]
     format = "cloudevents-json"
     file {
-      path = "/boundary/"
-      file_name = "all-events"
-    }
-  }
-  sink {
-    name = "all-events2"
-    description = "All events sent to file"
-    event_types = ["*"]
-    format = "cloudevents-json"
-    file {
       path = "/tmp/"
       file_name = "all-events"
     }
