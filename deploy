@@ -15,7 +15,6 @@ function init_compose() {
   pushd compose/
   docker compose --project-name boundary up -d
   popd
-  sleep 5
 }
 
 function init_terraform() {
