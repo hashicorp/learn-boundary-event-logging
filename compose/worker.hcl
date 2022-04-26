@@ -14,11 +14,6 @@ worker {
   address     = "worker"
   public_addr = "localhost:9202"
   controllers = ["boundary"]
-  // tags {
-  //   region    = ["us-east-1"],
-  //   // type      = ["prod"]
-  //   type      = ["prod", "database", "postgres", "mysql"]
-  // }
 }
 
 kms "aead" {

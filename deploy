@@ -1,5 +1,26 @@
 #!/bin/bash
 
+# fix permissions on local dirs
+chmod 777 ./auditlogs
+chmod 666 ./auditlogs/audit.log
+
+# # Password for the 'elastic' user (at least 6 characters)
+# export ELASTIC_PASSWORD=elastic
+# # Password for the 'kibana_system' user (at least 6 characters)
+# export KIBANA_PASSWORD=kibana
+# # Version of Elastic products
+# export STACK_VERSION=8.1.2
+# # Set the cluster name
+# export CLUSTER_NAME=boundary-docker-cluster
+# # Set to 'basic' or 'trial' to automatically start the 30-day trial
+# export LICENSE=basic
+# # Port to expose Elasticsearch HTTP API to the host
+# export ES_PORT=127.0.0.1:19200
+# # Port to expose Kibana to the host
+# export KIBANA_PORT=5601
+# # Increase or decrease based on the available host memory (in bytes)
+# export MEM_LIMIT=1073741824
+
 function cleanup() {
   pushd compose
   docker compose -p boundary rm -fs 

@@ -1,0 +1,12 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - /source/*.log
+  json.add_error_key: true
+
+output.elasticsearch:
+  hosts: ["https://elasticsearch:9200"]
+  ssl.certificate_authorities:
+    - /certs/ca/ca.crt
+  username: "elastic"
+  password: "elastic"

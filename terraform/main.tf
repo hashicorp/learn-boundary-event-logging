@@ -2,7 +2,7 @@ terraform {
   required_providers {
     boundary = {
       source  = "hashicorp/boundary"
-      version = "1.0.5"
+      version = "1.0.6"
     }
   }
 }
@@ -145,7 +145,7 @@ resource "boundary_target" "ssh" {
   session_connection_limit = -1
   session_max_seconds      = 2
   default_port             = 22
-  host_set_ids = [
+  host_source_ids = [
     boundary_host_set.local.id
   ]
 }
@@ -158,7 +158,7 @@ resource "boundary_target" "db" {
   session_connection_limit = -1
   session_max_seconds      = 2
   default_port             = 5432
-  host_set_ids = [
+  host_source_ids = [
     boundary_host_set.local.id
   ]
 }

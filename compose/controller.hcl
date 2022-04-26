@@ -10,7 +10,7 @@ controller {
 }
 
 listener "tcp" {
-  address = "boundary"
+  address = "0.0.0.0:9200"
   purpose = "api"
   tls_disable = true
   cors_enabled = true
@@ -45,36 +45,47 @@ kms "aead" {
 }
 
 events {
-  audit_enabled = false
-  observation_enabled = true
-  sysevents_enabled = true
+  audit_enabled        = true
+  observations_enabled = true
+  sysevents_enabled    = true
+
   sink "stderr" {
-    name = "all-events"
+    name        = "all-events"
     description = "All events sent to stderr"
     event_types = ["*"]
-    format = "cloudevents-json"
+    format      = "cloudevents-json"
   }
+
   sink {
-    name = "all-events"
-    description = "All events sent to file"
-    event_types = ["*"]
-    format = "cloudevents-json"
+    name        = "audit-sink"
+    description = "Audit sent to a file"
+    event_types = ["audit"]
+    format      = "cloudevents-json"
+
     file {
-      path = "/tmp/"
-      file_name = "all-events"
+      path      = "/logs"
+      file_name = "audit.log"
+    }
+
+    audit_config {
+      audit_filter_overrides {
+        secret    = "encrypt"
+        sensitive = "hmac-sha256"
+      }
     }
   }
-  sink {
-    name = "auth-sink"
-    description = "Authentications sent to a file"
-    event_types = ["observation"]
-    format = "cloudevents-json"
-    allow_filters = [
-      "\"/Data/request_info/Path\" contains \":authenticate\""
-    ]
-    file {
-      path = "/tmp/"
-      file_name = "auth-sink"
-    }
-  }
+
+  // sink {
+  //   name = "auth-sink"
+  //   description = "Authentications sent to a file"
+  //   event_types = ["observation"]
+  //   format = "cloudevents-json"
+  //   allow_filters = [
+  //     "\"/Data/request_info/Path\" contains \":authenticate\""
+  //   ]
+  //   file {
+  //     path = "./"
+  //     file_name = "auth-sink.log"
+  //   }
+  // }
 }
