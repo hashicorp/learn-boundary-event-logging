@@ -60,3 +60,47 @@ Authentication information:
   Expiration Time: Fri, 06 Nov 2020 07:17:01 PST
   Token:           at_NXiLK0izep_s14YkrMC6A4MajKyPekeqTTyqoFSg3cytC4cP8sssBRe5R8cXoerLkG7vmRYAY5q1Ksfew3JcxWSevNosoKarbkWABuBWPWZyQeUM1iEoFcz6uXLEyn1uVSKek7g9omERHrFs
 ```
+
+## Audit logs and ELK
+The boundary controller is configured to write out audit events to a log file,
+`auditevents/controller.log`. The docker-compose.yml provides services for
+collecting and shipping these logs to elasticsearch with kibana for
+visualization of the audit events.
+
+The `deploy` script changes the permissions on the `audtlogs/` directory:
+
+```
+$ chmod 777 ./auditlogs
+```
+
+Note: You might need to increase system limits for elasticsearch. See
+[here](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
+for more details:
+
+```
+$ sudo sysctl -w vm.max_map_count=262144 
+```
+
+Note: You may need to change the permissions set on the audit log file produced
+by boundary:
+
+```
+$ chmod 666 ./auditlogs/controller.log
+```
+
+Once the deployment is healthy, you can login to kibana using username `elastic`
+and the password `elastic` at `http://localhost:5601` in a web browser. The
+`$ELASTIC_PASSWORD`, `$KIBANA_PASSWORD`, and `$KIBANA_PORT` can be modified
+within the `compose/.env` file.
+
+To start creating visualizations for the data, create a data view:
+
+- Navigate to http://localhost:5601/app/management/kibana/dataViews
+- Click Create data view button
+- Enter filebeat-* to the Name
+- Confirm @timestamp is set as the Timestamp field
+- Click Create data view
+- Navigate to http://localhost:5601/app/discover#
+
+If a dataView is not automatically discovered, check the permissions on
+`auditlogs/` and `auditlogs/controller.log`.
