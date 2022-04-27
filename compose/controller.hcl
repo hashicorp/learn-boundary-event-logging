@@ -64,7 +64,7 @@ events {
 
     file {
       path      = "/logs"
-      file_name = "audit.log"
+      file_name = "controller.log"
     }
 
     audit_config {
@@ -85,7 +85,7 @@ events {
   //   ]
   //   file {
   //     path = "./"
-  //     file_name = "auth-sink.log"
+  //     file_name = "auth-events.log"
   //   }
   // }
 }
