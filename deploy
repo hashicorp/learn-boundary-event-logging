@@ -2,7 +2,6 @@
 
 # fix permissions on local dirs
 chmod 777 ./auditlogs
-chmod 666 ./auditlogs/audit.log
 
 # # Password for the 'elastic' user (at least 6 characters)
 # export ELASTIC_PASSWORD=elastic
