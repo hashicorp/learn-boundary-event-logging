@@ -1,5 +1,6 @@
 .DS_Store
 terraform/.DS_Store
 terraform/.terraform/*
+terraform/terraform.tfstate
 bins/
 *.log
