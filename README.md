@@ -1,12 +1,31 @@
 # Docker Deployment
 
-This directory contains an example deployment of Boundary using docker-compose and Terraform. The lab environment is meant to accompany the Hashicorp Learn [Boundary event logging tutorial](https://learn.hashicorp.com/tutorials/boundary/event-logging).
+This directory contains an example deployment of Boundary using docker-compose
+and Terraform. The lab environment is meant to accompany the Hashicorp Learn
+[Boundary event logging
+tutorial](https://learn.hashicorp.com/tutorials/boundary/event-logging).
 
-In this example, Boundary is deployed using the [hashicorp/boundary](https://hub.docker.com/r/hashicorp/boundary) Dockerhub image. The Boundary service ports are forwarded to the host machine to mimic being in a "public" network. 
+In this example, Boundary is deployed using the
+[hashicorp/boundary](https://hub.docker.com/r/hashicorp/boundary) Dockerhub
+image. The Boundary service ports are forwarded to the host machine to mimic
+being in a "public" network. 
+
+This deployment includes the following containers:
+
+- boundary controller
+- boundary worker
+- boundary db (postgres)
+- elasticsearch
+- kibana
+- filebeat
+- postgres target
+
+Huge thanks to @tmessi for building the Kibana intergration components.
 
 ## Getting Started 
 
-There is a helper script called `deploy` in this directory. You can use this script to deploy, login, and cleanup.
+There is a helper script called `deploy` in this directory. You can use this
+script to deploy, login, and cleanup.
 
 Start the docker-compose deployment:
 
