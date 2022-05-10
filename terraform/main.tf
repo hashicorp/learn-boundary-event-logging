@@ -110,10 +110,9 @@ resource "boundary_role" "proj_admin" {
   )
 }
 
-resource "boundary_host_catalog" "databases" {
+resource "boundary_host_catalog_static" "databases" {
   name        = "databases"
   description = "Database targets"
-  type        = "static"
   scope_id    = boundary_scope.project.id
 }
 
@@ -122,7 +121,7 @@ resource "boundary_host" "localhost" {
   name            = "localhost"
   description     = "Localhost host"
   address         = "localhost"
-  host_catalog_id = boundary_host_catalog.databases.id
+  host_catalog_id = boundary_host_catalog_static.databases.id
 }
 
 # Target hosts available on localhost: ssh and postgres
@@ -133,7 +132,7 @@ resource "boundary_host_set" "local" {
   type            = "static"
   name            = "local"
   description     = "Host set for local servers"
-  host_catalog_id = boundary_host_catalog.databases.id
+  host_catalog_id = boundary_host_catalog_static.databases.id
   host_ids        = [boundary_host.localhost.id]
 }
 
