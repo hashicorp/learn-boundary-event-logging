@@ -57,7 +57,7 @@ events {
   }
 
   sink {
-    name        = "audit-sink"
+    name        = "controller-audit-sink"
     description = "Audit sent to a file"
     event_types = ["audit"]
     format      = "cloudevents-json"
@@ -84,8 +84,8 @@ events {
   //     "\"/Data/request_info/Path\" contains \":authenticate\""
   //   ]
   //   file {
-  //     path = "./"
-  //     file_name = "auth-events.log"
+  //     path = "/logs/"
+  //     file_name = "auth.log"
   //   }
   // }
 }
