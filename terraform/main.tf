@@ -161,3 +161,33 @@ resource "boundary_target" "db" {
     boundary_host_set_static.local.id
   ]
 }
+
+resource "boundary_host_static" "postgres" {
+  type        = "static"
+  name        = "postgres"
+  description = "Private postgres container"
+  # DNS set via docker-compose
+  address         = "postgres"
+  host_catalog_id = boundary_host_catalog_static.databases.id
+}
+
+resource "boundary_host_set_static" "postgres" {
+  type            = "static"
+  name            = "postgres"
+  description     = "Host set for postgres containers"
+  host_catalog_id = boundary_host_catalog_static.databases.id
+  host_ids        = [boundary_host_static.postgres.id]
+}
+
+resource "boundary_target" "postgres" {
+  type                     = "tcp"
+  name                     = "postgres"
+  description              = "postgres server"
+  scope_id                 = boundary_scope.project.id
+  session_connection_limit = -1
+  session_max_seconds      = 300
+  default_port             = 5432
+  host_source_ids = [
+    boundary_host_set_static.postgres.id
+  ]
+}
