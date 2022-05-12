@@ -47,7 +47,6 @@ services:
     ports:
       - "9200:9200"
       - "9201:9201"
-      - "9202:9202"
       - "9203:9203"
     environment:
       - BOUNDARY_PG_URL=postgresql://postgres:postgres@db/boundary?sslmode=disable
@@ -71,7 +70,7 @@ services:
       - "../auditlogs/:/logs/"
     hostname: worker
     ports:
-      - "9204:9202"
+      - "9202:9202"
     environment:
       - HOSTNAME=worker
     depends_on:
