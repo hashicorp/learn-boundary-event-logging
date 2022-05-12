@@ -116,7 +116,7 @@ resource "boundary_host_catalog_static" "databases" {
   scope_id    = boundary_scope.project.id
 }
 
-resource "boundary_host" "localhost" {
+resource "boundary_host_static" "localhost" {
   type            = "static"
   name            = "localhost"
   description     = "Localhost host"
@@ -128,12 +128,12 @@ resource "boundary_host" "localhost" {
 # Postgres is exposed to localhost for debugging of the 
 # Boundary DB from the CLI. Assumes SSHD is running on
 # localhost.
-resource "boundary_host_set" "local" {
+resource "boundary_host_set_static" "local" {
   type            = "static"
   name            = "local"
   description     = "Host set for local servers"
   host_catalog_id = boundary_host_catalog_static.databases.id
-  host_ids        = [boundary_host.localhost.id]
+  host_ids        = [boundary_host_static.localhost.id]
 }
 
 resource "boundary_target" "ssh" {
@@ -145,7 +145,7 @@ resource "boundary_target" "ssh" {
   session_max_seconds      = 2
   default_port             = 22
   host_source_ids = [
-    boundary_host_set.local.id
+    boundary_host_set_static.local.id
   ]
 }
 
@@ -158,6 +158,6 @@ resource "boundary_target" "db" {
   session_max_seconds      = 2
   default_port             = 5432
   host_source_ids = [
-    boundary_host_set.local.id
+    boundary_host_set_static.local.id
   ]
 }
