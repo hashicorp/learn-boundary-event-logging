@@ -39,7 +39,7 @@ services:
     cap_add:
       - IPC_LOCK
     # command: ["server", "-config", "/boundary/controller.hcl"]
-    entrypoint: sh -c "sleep 3 && exec boundary server -config /boundary/controller.hcl"
+    entrypoint: sh -c "sleep 5 && exec boundary server -config /boundary/controller.hcl"
     volumes:
       - "${PWD}/:/boundary/"
       - "../auditlogs/:/logs/"
