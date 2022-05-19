@@ -81,17 +81,17 @@ events {
     }
   }
 
-  sink {
-    name = "auth-sink"
-    description = "Authentications sent to a file"
-    event_types = ["observation"]
-    format = "cloudevents-json"
-    allow_filters = [
-      "\"/Data/request_info/Path\" contains \":authenticate\""
-    ]
-    file {
-      path = "/logs/"
-      file_name = "auth.log"
-    }
-  }
+  // sink {
+  //   name = "auth-sink"
+  //   description = "Authentications sent to a file"
+  //   event_types = ["observation"]
+  //   format = "cloudevents-json"
+  //   allow_filters = [
+  //     "\"/Data/request_info/Path\" contains \":authenticate\""
+  //   ]
+  //   file {
+  //     path = "/logs/"
+  //     file_name = "auth.log"
+  //   }
+  // }
 }
