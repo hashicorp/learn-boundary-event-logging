@@ -57,7 +57,7 @@ services:
       - default
       - worker
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 http://boundary:9203/health || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --output-document /dev/null http://boundary:9203/health"]
       interval: 10s
       timeout: 5s
       retries: 5
