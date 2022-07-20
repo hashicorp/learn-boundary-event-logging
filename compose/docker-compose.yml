@@ -24,7 +24,7 @@ services:
         target: /etc/postgresql/
 
   db-init:
-    image: hashicorp/boundary:0.8.1
+    image: hashicorp/boundary:0.9.1
     command: ["database", "init", "-config", "/boundary/controller.hcl"]
     volumes:
       - "${PWD}/:/boundary/"
@@ -35,7 +35,7 @@ services:
         condition: service_healthy
 
   controller:
-    image: hashicorp/boundary:0.8.1
+    image: hashicorp/boundary:0.9.1
     cap_add:
       - IPC_LOCK
     # command: ["server", "-config", "/boundary/controller.hcl"]
@@ -63,7 +63,7 @@ services:
       retries: 5
 
   worker:
-    image: hashicorp/boundary:0.8.1
+    image: hashicorp/boundary:0.9.1
     command: ["server", "-config", "/boundary/worker.hcl"]
     volumes:
       - "${PWD}/:/boundary/"
