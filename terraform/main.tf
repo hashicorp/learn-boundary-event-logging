@@ -2,7 +2,7 @@ terraform {
   required_providers {
     boundary = {
       source  = "hashicorp/boundary"
-      version = "1.0.6"
+      version = "1.0.9"
     }
   }
 }
@@ -50,7 +50,7 @@ resource "boundary_user" "user" {
   for_each    = var.users
   name        = each.key
   description = "User resource for ${each.key}"
-  account_ids = [boundary_account.user[each.value].id]
+  account_ids = [boundary_account_password.user[each.value].id]
   scope_id    = boundary_scope.org.id
 }
 
@@ -61,7 +61,7 @@ resource "boundary_auth_method" "password" {
   scope_id    = boundary_scope.org.id
 }
 
-resource "boundary_account" "user" {
+resource "boundary_account_password" "user" {
   for_each       = var.users
   name           = each.key
   description    = "User account for ${each.key}"

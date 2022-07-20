@@ -1,3 +1,3 @@
 output "username" {
-  value = boundary_account.user
+  value = boundary_account_password.user
 }
