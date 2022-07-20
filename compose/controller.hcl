@@ -87,7 +87,7 @@ events {
   //   event_types = ["observation"]
   //   format = "cloudevents-json"
   //   allow_filters = [
-  //     "\"/Data/request_info/Path\" contains \":authenticate\""
+  //     "\"/data/request_info/path\" contains \":authenticate\""
   //   ]
   //   file {
   //     path = "/logs/"
